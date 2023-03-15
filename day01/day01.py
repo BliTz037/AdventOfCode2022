@@ -32,12 +32,21 @@ def calcElfsCalories(elfsInventory):
     return totalElfsCalories
 
 def findBigCalories(elfsCalories):
-    maxValue = 0
+    maxValue = (0, 0)
 
-    for x in elfsCalories:
-        if x > maxValue:
+    for x in enumerate(elfsCalories):
+        if x[1] > maxValue[1]:
             maxValue = x
     return maxValue
+
+def sumCalories(elfsCalories, nbElfs):
+    total = 0
+
+    for x in range(nbElfs):
+        bigCalories = findBigCalories(elfsCalories)
+        total += bigCalories[1]
+        del elfsCalories[bigCalories[0]]
+    return total
 
 def main():
     if len(sys.argv) != 2:
@@ -46,7 +55,8 @@ def main():
         buffer = getDataFile(sys.argv[1])
         bufferArray = getElfsInventory(buffer)
         totalElfsCalories = calcElfsCalories(bufferArray)
-        print("The elf carrying the most calories has", findBigCalories(totalElfsCalories), "calories")
+        print("The elf carrying the most calories has", findBigCalories(totalElfsCalories)[1], "calories")
+        print("The 3 elfs carrying the most calories have", sumCalories(totalElfsCalories, 3), "calories")
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)
