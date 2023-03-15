@@ -27,18 +27,44 @@ def getOutcomRound(choice):
         else:
             return 0
 
+def getMatchStrategies(choice):
+    if choice[0] == 'A':
+        if choice[1] == 'X':
+            return 'Z'
+        elif choice[1] == 'Y':
+            return 'X'
+        else:
+            return 'Y'
+
+    elif choice[0] == 'B':
+        if choice[1] == 'X':
+            return 'X'
+        elif choice[1] == 'Y':
+            return 'Y'
+        else:
+            return 'Z'
+    else:
+        if choice[1] == 'X':
+            return 'Y'
+        elif choice[1] == 'Y':
+            return 'Z'
+        else:
+            return 'X'
+
 def getShapeScore(shape):
     return 1 if shape == 'X' else 2 if shape == 'Y' else 3
 
-def getMatchScore(match):
+def getMatchScore(match, elfStrategy):
     choice = match.split(' ')
+    if elfStrategy:
+        choice[1] = getMatchStrategies(choice)
     return getOutcomRound(choice) + getShapeScore(choice[1])
 
-def getAllScore(buffer):
+def getAllScore(buffer, elfStrategy):
     bufferArray = buffer.split('\n')
     scores = []
     for x in bufferArray:
-        scores.append(getMatchScore(x))
+        scores.append(getMatchScore(x, elfStrategy))
     return scores
 
 def getMyScore(scores):
@@ -55,8 +81,11 @@ def main():
         sys.exit(1)
     try:
         buffer = getDataFile(sys.argv[1])
-        scores = getAllScore(buffer)
+        scores = getAllScore(buffer, False)
         print("Your total score will be", getMyScore(scores))
+        
+        scores = getAllScore(buffer, True)
+        print("Your total score with strategy guide will be", getMyScore(scores))
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)
