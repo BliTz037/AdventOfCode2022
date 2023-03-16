@@ -13,9 +13,15 @@ def findSameItem(bag):
                 return bag[0][x]
     return ('')
 
-def getPriorities(bag):
-    item = findSameItem(bag)
+def findBadge(team):
+    bagCheck = team[1:]
+    for x in team[0]:
+        if bagCheck[0].find(x) != -1 and bagCheck[1].find(x) != -1:
+            return x
+    return ''
 
+def getPriorities(item):
+    
     if item == '':
         return 0
     if item.isupper():
@@ -30,17 +36,29 @@ def getSumPriorities(buffer):
     for x in bufferArray:
         arrLen = len(x)
         bag = (x[:arrLen//2], x[arrLen//2:])
-        total += getPriorities(bag)
+        item = findSameItem(bag)
+        total += getPriorities(item)
     return total
 
+def getSumBadgePriorities(buffer):
+    bufferArray = buffer.split('\n')
+    total = 0
+    i = 0
+    
+    while i < len(bufferArray):
+        team = [bufferArray[i], bufferArray[i + 1], bufferArray[i + 2]]
+        badge = findBadge(team)
+        total += getPriorities(badge)
+        i = i + 3
+    return total
 
 def main():
     if len(sys.argv) != 2:
         sys.exit(1)
     try:
         buffer = getDataFile(sys.argv[1])
-        priorities = getSumPriorities(buffer)
-        print(priorities)
+        print(getSumPriorities(buffer))
+        print(getSumBadgePriorities(buffer))
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)
