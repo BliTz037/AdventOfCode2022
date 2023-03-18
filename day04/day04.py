@@ -28,14 +28,27 @@ def getPairsContainOther(sections):
             continue
     return i
 
+def getPairsOverlap(sections):
+    i = 0
+    for x in sections:
+        if (x[0][0] <= x[1][0]) and (x[0][1] >= x[1][1]):
+            i += 1
+        elif (x[1][0] <= x[0][0]) and (x[1][1] >= x[0][1]):
+            i += 1
+        elif (x[0][0] <= x[1][1]) and (x[0][1] >= x[1][0]):
+            i += 1
+        else:
+            continue
+    return i
+
 def main():
     if len(sys.argv) != 2:
         sys.exit(1)
     try:
         buffer = getDataFile(sys.argv[1])
         sections = getSectionAssignmentPair(buffer)
-        result = getPairsContainOther(sections)
-        print(result)
+        print(getPairsContainOther(sections))
+        print(getPairsOverlap(sections))
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)
