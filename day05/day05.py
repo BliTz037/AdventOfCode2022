@@ -45,7 +45,6 @@ def parseIntructions(instructions):
     return instructionsParsed
 
 def doRearrangement(stacks, instructions):
-    
     for instruction in instructions:
         loopNb = int(instruction[1])
         fromIdx = int(instruction[3]) - 1
@@ -78,7 +77,6 @@ def main():
         stackParsed = parseStackCrates(getStackCrates(buffer))
         instructionsParsed = parseIntructions(getInstructions(buffer))
         #newStack = doRearrangement(stackParsed, instructionsParsed)
-        print(stackParsed)
         newStack2 = doRearrangementCrateMover9001(stackParsed, instructionsParsed)
         #print(getMessage(newStack))
         print(getMessage(newStack2))
