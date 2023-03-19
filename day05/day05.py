@@ -54,6 +54,16 @@ def doRearrangement(stacks, instructions):
             stacks[toIdx].insert(0, stacks[fromIdx].pop(0))
     return stacks
 
+def doRearrangementCrateMover9001(stacks, instructions):
+    for instruction in instructions:
+        loopNb = int(instruction[1])
+        fromIdx = int(instruction[3]) - 1
+        toIdx = int(instruction[5]) - 1
+        
+        stacks[toIdx] = stacks[fromIdx][:loopNb] + stacks[toIdx]
+        stacks[fromIdx] = stacks[fromIdx][loopNb:]
+    return stacks
+
 def getMessage(stacks):
     message = ""
     for x in stacks:
@@ -67,8 +77,11 @@ def main():
         buffer = getDataFile(sys.argv[1])
         stackParsed = parseStackCrates(getStackCrates(buffer))
         instructionsParsed = parseIntructions(getInstructions(buffer))
-        newStack = doRearrangement(stackParsed, instructionsParsed)
-        print(getMessage(newStack))
+        #newStack = doRearrangement(stackParsed, instructionsParsed)
+        print(stackParsed)
+        newStack2 = doRearrangementCrateMover9001(stackParsed, instructionsParsed)
+        #print(getMessage(newStack))
+        print(getMessage(newStack2))
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)

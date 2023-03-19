@@ -7,7 +7,7 @@ Series of programming puzzles resolved with Python3 language
 - [x] Day 02 - 2023-03-15
 - [x] Day 03 - 2023-03-16
 - [x] Day 04 - 2023-03-18
-- [ ] Day 05
+- [x] Day 05 - 2023-03-19
 - [ ] Day 06
 - [ ] Day 07
 - [ ] Day 08
