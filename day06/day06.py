@@ -17,13 +17,13 @@ def isFirstMarker(marker):
         i = 1
     return True
 
-def findStartPacket(buffer):
+def findStartPacket(buffer, size):
     for idx, x in enumerate(buffer):
-        tmp = buffer[idx: idx + 4]
-        if (len(tmp) != 4):
+        tmp = buffer[idx: idx + size]
+        if (len(tmp) != size):
             break
         if (isFirstMarker(tmp) == True):
-            return ((tmp, idx + 4))
+            return ((tmp, idx + size))
         #print(tmp)
     return None
 
@@ -32,7 +32,8 @@ def main():
         sys.exit(1)
     try:
         buffer = getDataFile(sys.argv[1])
-        test = findStartPacket(buffer)
+        test = findStartPacket(buffer, 4)
+        test = findStartPacket(buffer, 14)
         print(test)
     except OSError:
         print("Impossible to read", sys.argv[1])
