@@ -59,6 +59,27 @@ def getSum(osDict):
         total += directorys[x]
     return total
 
+def getSmallDirectory(osDict):
+    osDictSize = {}
+    DISK_SPACE = 70000000
+    UPDATE_SPACE_REQUIRED = 30000000
+    
+    for x in osDict.keys():
+        osDictSize[x] = getDirectorySize(osDict, x)
+    spaceRequired = UPDATE_SPACE_REQUIRED - (DISK_SPACE - osDictSize["."])
+    
+    while osDictSize:
+        smallDirectorySize = osDictSize["."]
+        smallDirectoryKey = ""
+        for x in osDictSize.keys():
+            if (osDictSize[x] < smallDirectorySize):
+                smallDirectorySize = osDictSize[x]
+                smallDirectoryKey = x
+        if (smallDirectorySize >= spaceRequired):
+            return smallDirectorySize
+        else:
+            del osDictSize[smallDirectoryKey]
+    return 0
 
 def main():
     if len(sys.argv) != 2:
@@ -67,7 +88,8 @@ def main():
         buffer = getDataFile(sys.argv[1])
         lines = buffer.split('\n')
         osDict = getFileSystem(lines)
-        print(getSum(osDict))
+        print("Part one:", getSum(osDict))
+        print("Part two:", getSmallDirectory(osDict))
     except OSError:
         print("Impossible to read", sys.argv[1])
         sys.exit(1)
