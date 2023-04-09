@@ -22,7 +22,7 @@ def updateTails(headPosition, tailPosition):
     elif xDiff == 1 and yDiff == 2:
         tailPosition[0] += 1
         tailPosition[1] += 1
-    elif xDiff == 2 and yDiff == 1: ##
+    elif xDiff == 2 and yDiff == 1:
         tailPosition[0] += 1
         tailPosition[1] += 1
     elif xDiff == 2 and yDiff == 0:
